@@ -5,6 +5,7 @@ var del = require('del');
 var glob = require('glob');
 var paths = require('./gulp.config.json');
 var plug = require('gulp-load-plugins')();
+var notifier = require('node-notifier');
 var reload = browserSync.reload;
 
 var colors = plug.util.colors;
@@ -147,11 +148,10 @@ gulp.task('build', ['inject-and-rev', 'images', 'fonts'], function() {
     // clean out the temp folder when done
     del(paths.temp);
 
-    return gulp
-        .src('').pipe(plug.notify({
-            onLast: true,
-            message: 'Deployed code!'
-        }));
+    notifier.notify({
+      'title': 'Deployed code!',
+      'message': 'Code as been built, concatonated and minified!'
+    });
 });
 
 /**
